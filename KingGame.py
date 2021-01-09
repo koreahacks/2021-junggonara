@@ -11,55 +11,43 @@ async def on_ready():
     GAME = "게임 종료"
     print("is ready")
 
-@client.command()
-async def 왕게임(ctx):
-    global GAME
-    global LIST
-    global LIST_COUNT
+async def kingame(message, LIST):
     maxMem=0
     max=0
-    if GAME == "게임 종료":
-        GAME = "게임 시작"
-        LIST = []
-        LIST.append(ctx.author.id)
-        LIST_COUNT = 1
+    channel=message.channel
+    try:
+        await client.wait_for('대기시간', timeout=30.0)
+    except asyncio.TimeoutError :
+        if int(LIST.len()) <= int(2):
+            await emoji.delete()
+            await channel.send("3명 이하는 게임을 시작할 수 없어요!")
+        else:
+            embed2 = discord.Embed(title="왕게임 점수 분배 목록")
+            embed3= discord.Embed(title="who is the new King")
+            i = 0
+            for MEMBER in LIST:
+                i += 1
+                RANDOM = randrange(0, 100)
+                embed2.add_field(name=f"해당 대상자는 {RANDOM}점을 분배 받았습니다", value=f"{i}번 <@{MEMBER}>", inline=False)
+                if max < RANDOM:
+                    maxMem=MEMBER
+            embed3.add_field(name= "왕은 다른 번호들에게 명령을 내리세요", value=f"왕은 <@{maxMem}> 입니다.")
+            embed3.set_footer(text="60초 뒤에 멤버들의 번호가 공개됩니다.")
 
-        embed = discord.Embed(title="왕게임 시작", description=f"이모지를 눌러주세요!\n30초 후에 왕게임이 시작합니다!")
-        embed.set_footer(text="명령어를 호출한 사용자는 이미 등록되었습니다")
-        emoji = await ctx.send(embed=embed)
-        await emoji.add_reaction('🔌')
+            embed2.set_footer(text="가장 많은 점수를 분배 받은 사람이 왕입니다!")
+            await emoji.delete()
+            await channel.send(embed=embed3)
 
-        try:
-            await client.wait_for('대기시간', timeout=30.0)
-        except asyncio.TimeoutError :
-            if int(LIST_COUNT) <= int(0):
-                await emoji.delete()
-                await ctx.send("3명 이하는 게임을 시작할 수 없어요!")
-                GAME = "게임 종료"
-            else:
-                embed2 = discord.Embed(title="왕게임 점수 분배 목록")
-                embed3= discord.Embed(title="who is the new King")
-                i = 0
-                for MEMBER in LIST:
-                    i += 1
-                    RANDOM = randrange(0, 100)
-                    embed2.add_field(name=f"해당 대상자는 {RANDOM}점을 분배 받았습니다", value=f"{i}번 <@{MEMBER}>", inline=False)
-                    if max < RANDOM:
-                        maxMem=MEMBER
-                embed3.add_field(name= "왕은 다른 번호들에게 명령을 내리세요", value=f"왕은 <@{maxMem}> 입니다.")
-                embed3.set_footer(text="60초 뒤에 멤버들의 번호가 공개됩니다.")
+            try:
+                await client.wait_for("가나다", timeout=30)
+            except  asyncio.TimeoutError:
+                await channel.send(embed=embed2)
 
-                embed2.set_footer(text="가장 많은 점수를 분배 받은 사람이 왕입니다!")
-                await emoji.delete()
-                await ctx.send(embed=embed3)
 
-                try:
-                    await client.wait_for("간나다", timeout=30)
-                except  asyncio.TimeoutError:
-                    await ctx.send(embed=embed2)
-                    GAME = "게임 종료"
-    else:
-        await ctx.send("Game Start Status")
+@client.event
+async def on_message(message):
+    if message.content.startswitch("/왕게임"):
+        KingGame(message,LIST)
 
 @client.event
 async def on_reaction_add(reaction, user):
