@@ -8,3 +8,13 @@ async def set_speaker(member: discord.Member, state: bool):
 
 async def set_mic(member: discord.Member, state: bool):
     await member.edit(mute=not state)
+
+
+async def connect_bot_voice_channel(message: discord.Message):
+    channel = message.author.voice.channel
+    await channel.connect()
+
+
+async def disconnect_bot_voice_channel(message: discord.Message):
+    channel = message.author.voice.channel
+    await channel.disconnect()
