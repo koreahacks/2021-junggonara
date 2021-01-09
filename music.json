@@ -2,27 +2,111 @@
   "mu1": {
     "singer" : "아이유",
     "title" : "좋은 날",
-    "url" : "/music/IU_Good.mp3"
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/IU_Good.mp3"
   },
-
   "mu2": {
     "singer" : "조정석",
     "title" : "아로하",
-    "url" : "https://www.youtube.com/watch?v=g8oRKbYrZ6Q"
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/아로하.mp3"
   },
   "mu3": {
     "singer" : "엠씨 더 맥스",
     "title" : "처음처럼",
-    "url" : "https://www.youtube.com/watch?v=cqzISZnLgCo"
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/처음처럼.mp3"
   },
   "mu4": {
     "singer" : "가호",
     "title" : "시작",
-    "url" : "https://www.youtube.com/watch?v=rZHC1zMiWiU"
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/시작.mp3"
   },
   "mu5": {
-    "singer" : "아이유",
-    "title" : "좋은 날",
-    "url" : "https://www.youtube.com/watch?v=rZHC1zMiWiU"
+    "singer" : "블랙핑크",
+    "title" : "휘파람",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/휘파람.mp3"
+  },
+ "mu6": {
+    "singer" : "더 넛츠",
+    "title" : "사랑의 바보",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/사랑의 바보.mp3"
+  },
+ "mu7": {
+    "singer" : "AOA",
+    "title" : "심쿵해",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/심쿵해.mp3"
+  },
+"mu8": {
+    "singer" : "여자친구",
+    "title" : "오늘부터 우리는",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/오늘부터 우리는.mp3"
+  },
+"mu9": {
+    "singer" : "방탄소년단",
+    "title" : "I need you",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/I NEED U.mp3"
+  },
+"mu10": {
+    "singer" : "마마무",
+    "title" : "음오아예",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/음오아예.mp3"
+  },
+"mu11": {
+    "singer" : "레드벨벳",
+    "title" : "Ice Cream Cake",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/Ice Cream Cake.mp3"
+  },
+"mu12": {
+    "singer" : "악동뮤지션",
+    "title" : "200%",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/200%.mp3"
+  },
+"mu13": {
+    "singer" : "아이오아이",
+    "title" : "너무너무너무",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/너무너무너무.mp3"
+  },
+"mu14": {
+    "singer" : "트와이스",
+    "title" : "우아하게",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/우아하게.mp3"
+  },
+"mu15": {
+    "singer" : "아이콘",
+    "title" : "취향저격",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/취향저격.mp3"
+  },
+"mu16": {
+    "singer" : "에이핑크",
+    "title" : "Mr.Chu",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/Mr.Chu.mp3"
+  },
+"mu17": {
+    "singer" : "태양",
+    "title" : "눈코입",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/눈코입.mp3"
+  },
+"mu18": {
+    "singer" : "오렌지캬라멜",
+    "title" : "까탈레나",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/까탈레나.mp3"
+  },
+"mu19": {
+    "singer" : "블락비",
+    "title" : "HER",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/Her.mp3"
+  },
+"mu20": {
+    "singer" : "처진 달팽이",
+    "title" : "압구정 날라리",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/압구정 날라리.mp3"
+  },
+ "mu21": {
+    "singer" : "싸이",
+    "title" : "강남 스타일",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/강남스타일.mp3"
+  },
+  "mu22": {
+    "singer" : "H.O.T",
+    "title" : "캔디",
+    "url" : "C:/Users/user/PycharmProjects/2021-junggonara/music/캔디.mp3"
   }
 }

@@ -13,6 +13,8 @@ bot = commands.Bot(command_prefix='!')
 gm = GameManager.GameManager.instance()
 game_info = json.load(open('game_data.json', encoding='utf-8'))
 
+print(game_info.keys())
+
 
 @bot.event
 async def on_ready():
@@ -55,6 +57,8 @@ async def on_message(message):
                 elif gm.game_name == "더게임오브데스":
                     await thegameofdeath.thegameofdeath(message, bot)
 
+                elif gm.game_name == "음악퀴즈":
+                    await MusicQuiz.musicQ(message, gm.users, bot)
                 elif gm.game_name == '한컴타자연습':
                     await quiz.quiz(message, bot)
 
@@ -92,7 +96,6 @@ async def on_message(message):
                 if message.content in gm.users[0]:
                     print('message.content in gm.users[0]')
                     gm.users[1][message.author.name] = message.content
-
                 if len(gm.users[0]) == len(gm.users[1]):
                     print('len(gm.users[0]) == len(gm.users[1])')
                     try:
@@ -100,6 +103,8 @@ async def on_message(message):
                     except ValueError:
                         return
 
+        elif gm.game_name == "음악퀴즈":
+            pass
         elif gm.game_name == '한컴타자연습':
             if not message.author.bot:
                 gm.next_user = message.author
@@ -152,5 +157,3 @@ async def on_reaction_add(reaction, user):
 
 
 bot.run(json.load(open("tok.json"))['tok'])
-
-#
