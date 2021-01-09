@@ -6,7 +6,7 @@ import json
 
 from utils import GameManager
 from utils import VoiceController
-from Games import acryofsilence
+from Games import acryofsilence, thegameofdeath
 
 
 bot = commands.Bot(command_prefix='!')
@@ -53,6 +53,9 @@ async def on_message(message):
                 if gm.game_name == "고요속의외침":
                     await acryofsilence.acryofsilence(message, bot, game_info[gm.game_name]['words'])
 
+                elif gm.game_name == "더게임오브데스":
+                    await thegameofdeath.thegameofdeath(message, bot)
+
             else:
                 await message.channel.send("해당 게임은 없습니다.")
                 gm.game_state = "WAIT_GAME"
@@ -63,6 +66,12 @@ async def on_message(message):
                 gm.next_user = message.author
                 gm.answer = message.content
                 gm.count -= 1
+
+        elif gm.game_name == '더게임오브데스':
+            if not message.author.bot:
+                if message.content in gm.users[0]:
+                    gm.users[1][message.author.name] = message.content
+
         else:
             await gm.set_game_over(message)
 
