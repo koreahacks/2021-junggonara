@@ -9,9 +9,9 @@ gm = GameManager.GameManager.instance()
 
 async def kingame(message, bot):
     LIST = gm.users
-    maxMem=0
-    max=0
-    channel=message.channel
+    maxMem = 0
+    max = 0
+    channel = message.channel
     try:
         await bot.wait_for('대기시간', timeout=3.0)
     except asyncio.TimeoutError :
@@ -23,7 +23,7 @@ async def kingame(message, bot):
             RANDOM = randrange(0, 100)
             embed2.add_field(name=f"해당 대상자는 {RANDOM}점을 분배 받았습니다", value=f"{i}번 <@{MEMBER}>", inline=False)
             if max < RANDOM:
-                maxMem=MEMBER
+                maxMem = MEMBER
         embed3.add_field(name= "왕은 다른 번호들에게 명령을 내리세요", value=f"왕은 <@{maxMem}> 입니다.")
         embed3.set_footer(text="60초 뒤에 멤버들의 번호가 공개됩니다.")
 
@@ -32,5 +32,5 @@ async def kingame(message, bot):
 
         try:
             await bot.wait_for("가나다", timeout=30)
-        except  asyncio.TimeoutError:
+        except asyncio.TimeoutError:
             await channel.send(embed=embed2)

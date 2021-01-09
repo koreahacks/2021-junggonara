@@ -65,6 +65,13 @@ async def on_message(message):
                 elif gm.game_name == '눈치게임':
                     await nunchi.nunchi(message, bot)
 
+                elif gm.game_name == '왕게임':
+                    await KingGame.kingame(message, bot)
+
+                elif gm.game_name == "공산당게임":
+                    gm.users = message.author.voice.channel.members
+                    await gongsangame.gongsan(message, bot)
+
             else:
                 await message.channel.send("해당 게임은 없습니다.")
                 gm.game_state = "WAIT_GAME"
@@ -104,6 +111,13 @@ async def on_message(message):
                 gm.count += 1
                 gm.answer = int(message.content)
                 gm.next_user = message.author
+
+        elif gm.game_name == '왕게임':
+            pass
+
+        elif gm.game_name == '공산당게임':
+            pass
+
         else:
             await gm.set_game_over(message)
 
