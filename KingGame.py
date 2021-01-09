@@ -3,8 +3,6 @@ import asyncio
 from discord.ext import commands
 from random import randrange
 
-client = commands.Bot(command_prefix="/")
-
 @client.event
 async def on_ready():
     global GAME
@@ -73,5 +71,3 @@ async def on_reaction_add(reaction, user):
 
             LIST_COUNT = LIST_COUNT + 1
             LIST.append(user.id)
-
-client.run('Nzk3MjgzOTUwODk2MDg3MTAx.X_kOig.NPsAOo1ErmEBE0EMjIr8gCak4Sk')
