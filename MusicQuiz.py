@@ -73,5 +73,3 @@ async def on_message(message):
         return None
     if message.content.startswith("!join"):
         await join(message)
-
-client.run("Nzk3MjgzOTUwODk2MDg3MTAx.X_kOig.ap3ZbjG65ZgolHNCCb2JWZVDG5o")
