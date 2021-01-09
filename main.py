@@ -6,7 +6,7 @@ import json
 
 from utils import GameManager
 from utils import VoiceController
-from Games import acryofsilence, thegameofdeath
+from Games import acryofsilence, thegameofdeath, quiz, nunchi, gongsangame, bomb_game, alcohol_calculator, KingGame
 
 
 bot = commands.Bot(command_prefix='!')
@@ -56,6 +56,15 @@ async def on_message(message):
                 elif gm.game_name == "더게임오브데스":
                     await thegameofdeath.thegameofdeath(message, bot)
 
+                elif gm.game_name == '한컴타자연습':
+                    await quiz.quiz(message, bot)
+
+                elif gm.game_name == '넌센스퀴즈':
+                    await quiz.nunsence(message, bot)
+
+                elif gm.game_name == '눈치게임':
+                    await nunchi.nunchi(message, bot)
+
             else:
                 await message.channel.send("해당 게임은 없습니다.")
                 gm.game_state = "WAIT_GAME"
@@ -69,9 +78,32 @@ async def on_message(message):
 
         elif gm.game_name == '더게임오브데스':
             if not message.author.bot:
+                if len(gm.users) == 3:
+                    return
                 if message.content in gm.users[0]:
                     gm.users[1][message.author.name] = message.content
 
+                if len(gm.users[0]) == len(gm.users[1]):
+                    try:
+                        gm.users.append(int(message.content))
+                    except ValueError:
+                        return
+
+        elif gm.game_name == '한컴타자연습':
+            if not message.author.bot:
+                gm.next_user = message.author
+                gm.answer = message.content
+
+        elif gm.game_name == '넌센스퀴즈':
+            if not message.author.bot:
+                gm.next_user = message.author
+                gm.answer = message.content
+
+        elif gm.game_name == '눈치게임':
+            if (not message.author.bot) and (message.content.isdigit()):
+                gm.count += 1
+                gm.answer = int(message.content)
+                gm.next_user = message.author
         else:
             await gm.set_game_over(message)
 

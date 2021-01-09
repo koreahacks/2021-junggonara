@@ -18,32 +18,35 @@ async def thegameofdeath(message, bot):
 
     gm.users[0].append(message.author.voice.channel.members)
 
-    users = {starter: starter}
-    CHOOSE = '지목 시작'
-    if CHOOSE =='지목 시작':
-        gm.users[str(message.author.name)] = str(message.content)
+    while True:
+        try:
+            bot.wait_for(timeout=0.5)
+        except asyncio.TimeoutError:
+            if len(gm.users[0]) == len(gm.users[1]):
+                break
 
-        print(users)
-        print(len(users))
-        print(starter)
-        print(len(message.author.voice.channel.members))
-        if len(users) == len(message.author.voice.channel.members): #이 부분은 나중에 수현이가 멤버 수 받으면 그 변수로 가능.
-            await message.channel.send("모든 사람이 지목했습니다!")
-            await message.channel.send("Starter는"+starter+"입니다.")
-            await message.channel.send(users)
-            await message.channel.send("Starter분은 반복할 횟수를 입력해주세요!")
-            CHOOSE = '지목 종료'
-    elif CHOOSE == '지목 종료':
-        cnt = int(message.content)
-        print(cnt)
-        jimok = starter
-        for i in range(cnt):
-            await message.channel.send(f"{jimok} -> {users.get(jimok)}")
-            try:
-                await bot.wait_for('대기', timeout=1.0)
-            except asyncio.TimeoutError:
-                jimok = users.get(jimok)
-                jimok = users.get(jimok)
-                i = i + 1
-        await message.channel.send(f"걸린 사람은 {jimok}입니다! 마시세요")
+    await message.channel.send("모든 사람이 지목했습니다!")
+    await message.channel.send("Starter는"+starter+"입니다.")
+    await message.channel.send(gm.users[1])
+    await message.channel.send("Starter분은 반복할 횟수를 입력해주세요!")
+
+    while True:
+        try:
+            bot.wait_for(timeout=0.5)
+        except asyncio.TimeoutError:
+            if len(gm.users) == 3:
+                break
+
+    print(gm.users[2])
+    jimok = starter
+    for i in range(gm.users[2]):
+        await message.channel.send(f"{jimok} -> {gm.users[1].get(jimok)}")
+        try:
+            await bot.wait_for('대기', timeout=1.0)
+        except asyncio.TimeoutError:
+            jimok = gm.users[1].get(jimok)
+            i = i + 1
+    await message.channel.send(f"걸린 사람은 {jimok}입니다! 마시세요")
+
+    gm.set_game_over(message)
 
