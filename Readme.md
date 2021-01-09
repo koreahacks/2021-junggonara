@@ -1,2 +1,2 @@
-pip install í•„ìš”
-C:\Users\user\AppData\Local\Programs\Python\Python38\python.exe -m pip install -U discord.py[voice]
+pip install ÇÊ¿ä python -m pip install -U discord.py[voice]
+	       pip install ffmpeg

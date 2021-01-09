@@ -3,20 +3,12 @@ import asyncio
 from discord.ext import commands
 from random import randrange
 
-client = commands.Bot(command_prefix="/")
-
-@client.event
-async def on_ready():
-    global GAME
-    GAME = "게임 종료"
-    print("is ready")
-
-async def kingame(message, LIST):
+async def kingame(message, LIST, bot):
     maxMem=0
     max=0
     channel=message.channel
     try:
-        await client.wait_for('대기시간', timeout=3.0)
+        await bot.wait_for('대기시간', timeout=3.0)
     except asyncio.TimeoutError :
 
         embed2 = discord.Embed(title="왕게임 점수 분배 목록")
@@ -35,6 +27,6 @@ async def kingame(message, LIST):
         await channel.send(embed=embed3)
 
         try:
-            await client.wait_for("가나다", timeout=30)
+            await bot.wait_for("가나다", timeout=30)
         except  asyncio.TimeoutError:
             await channel.send(embed=embed2)

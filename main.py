@@ -1,13 +1,10 @@
 import discord
 from discord.ext import commands
 
-import asyncio
 import json
 
 from utils import GameManager
-from utils import VoiceController
-from Games import acryofsilence, thegameofdeath
-
+from Games import acryofsilence, thegameofdeath, MusicQuiz
 
 bot = commands.Bot(command_prefix='!')
 
@@ -56,6 +53,8 @@ async def on_message(message):
                 elif gm.game_name == "더게임오브데스":
                     await thegameofdeath.thegameofdeath(message, bot)
 
+                elif gm.game_name == "음악퀴즈":
+                    await MusicQuiz.musicQ(message, gm.users, bot)
             else:
                 await message.channel.send("해당 게임은 없습니다.")
                 gm.game_state = "WAIT_GAME"
@@ -71,6 +70,9 @@ async def on_message(message):
             if not message.author.bot:
                 if message.content in gm.users[0]:
                     gm.users[1][message.author.name] = message.content
+
+        elif gm.game_name == "음악퀴즈":
+            pass
 
         else:
             await gm.set_game_over(message)

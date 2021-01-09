@@ -12,9 +12,8 @@ async def set_mic(member: discord.Member, state: bool):
 
 async def connect_bot_voice_channel(message: discord.Message):
     channel = message.author.voice.channel
-    await channel.connect()
-
+    return await channel.connect()
 
 async def disconnect_bot_voice_channel(message: discord.Message):
     channel = message.author.voice.channel
-    await channel.disconnect()
+    return await channel.disconnect()
