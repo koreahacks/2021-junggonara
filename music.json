@@ -1,0 +1,28 @@
+{
+  "mu1": {
+    "singer" : "아이유",
+    "title" : "좋은 날",
+    "url" : "https://www.youtube.com/watch?v=rZHC1zMiWiU"
+  },
+
+  "mu2": {
+    "singer" : "조정석",
+    "title" : "아로하",
+    "url" : "https://www.youtube.com/watch?v=g8oRKbYrZ6Q"
+  },
+  "mu3": {
+    "singer" : "엠씨 더 맥스",
+    "title" : "처음처럼",
+    "url" : "https://www.youtube.com/watch?v=cqzISZnLgCo"
+  },
+  "mu4": {
+    "singer" : "가호",
+    "title" : "시작",
+    "url" : "https://www.youtube.com/watch?v=rZHC1zMiWiU"
+  },
+  "mu5": {
+    "singer" : "아이유",
+    "title" : "좋은 날",
+    "url" : "https://www.youtube.com/watch?v=rZHC1zMiWiU"
+  }
+}

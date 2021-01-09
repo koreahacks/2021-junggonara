@@ -1,9 +1,23 @@
 import discord
 import asyncio
 from discord.ext import commands
+import youtube_dl
+import re
+import json
 from random import randrange
 
 client = commands.Bot(command_prefix='!')
+
+que = {}
+playerlist = {}
+playlist = list() #재생목록 리스트
+
+def queue(id): #음악 재생용 큐
+	if que[id] != []:
+		player = que[id].pop(0)
+		playerlist[id] = player
+		del playlist[0]
+		player.start()
 
 @client.event
 async def on_ready():
@@ -16,24 +30,66 @@ async def join(message):
     #channel = message.author.voice.channel
     await channel.connect()
 
-    #await channel.connect()
+async def disjoin(message):
+    channel = message.author.voice.channel
+    #channel = message.author.voice.channel
+    await channel.disconnect()
 
-@client.event
-async def on_reaction_add(reaction, user):
-    global LIST_COUNT
-    if user.bot:
+async def musicPlay(message):
+    try:
+        musicDir = json.load(open("music.json",encoding="utf-8"))
+        url=musicDir["mu"+str(randrange(1,20))]
+        url1 = re.match('(https?://)?(www\.)?((youtube\.(com))/watch\?v=([-\w]+)|youtu\.be/([-\w]+))',
+                        )  # 정규 표현식을 사용해 url 검사
+        if url1 == None:
+            await client.send_message(message.channel,
+                                      embed=discord.Embed(title=":no_entry_sign: url을 제대로 입력해주세요.", colour=0x2EFEF7))
+            return
+    except IndexError:
+        await client.send_message(message.channel,
+                                  embed=discord.Embed(title=":no_entry_sign: url을 입력해주세요.", colour=0x2EFEF7))
         return
-    if reaction.emoji == '🔌' and user.id == user.id:
-        if GAME == "게임 시작":
-            for MEMBER in LIST:
-                if MEMBER == user.id:
-                    print("이미 등록된 사용자입니다")
-                    return
-            LIST_COUNT = LIST_COUNT + 1
-            LIST.append(user.id)
+
+    channel = message.author.voice.voice_channel
+    server = message.server
+    voice_client = client.voice_client_in(server)
+
+    if client.is_voice_connected(server) and not playerlist[server.id].is_playing():  # 봇이 음성채널에 접속해있으나 음악을 재생하지 않을 때
+        await voice_client.disconnect()
+    elif client.is_voice_connected(server) and playerlist[server.id].is_playing():  # 봇이 음성채널에 접속해있고 음악을 재생할 때
+        player = await voice_client.create_ytdl_player(url, after=lambda: queue(server.id),
+                                                       before_options="-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5")
+        if server.id in que:  # 큐에 값이 들어있을 때
+            que[server.id].append(player)
+        else:  # 큐에 값이 없을 때
+            que[server.id] = [player]
+        await client.send_message(message.channel,
+                                  embed=discord.Embed(title=":white_check_mark: 추가 완료!", colour=0x2EFEF7))
+        playlist.append(player.title)  # 재생목록에 제목 추가
+        return
+
+    try:
+        voice_client = await client.join_voice_channel(channel)
+    except discord.errors.InvalidArgument:  # 유저가 음성채널에 접속해있지 않을 때
+        await client.send_message(message.channel,
+                                  embed=discord.Embed(title=":no_entry_sign: 음성채널에 접속하고 사용해주세요.", colour=0x2EFEF7))
+        return
+
+    try:
+        player = await voice_client.create_ytdl_player(url, after=lambda: queue(server.id),
+                                                       before_options="-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5")
+        playerlist[server.id] = player
+        playlist.append(player.title)
+    except youtube_dl.utils.DownloadError:  # 유저가 제대로 된 유튜브 경로를 입력하지 않았을 때
+        await client.send_message(message.channel,
+                                  embed=discord.Embed(title=":no_entry_sign: 존재하지 않는 경로입니다.", colour=0x2EFEF7))
+        await voice_client.disconnect()
+        return
+    player.start()
 
 async def musicQ(message,LIST):
     channel = message.channel
+    global GAME
     if GAME == "게임 종료":
         GAME = "게임 시작"
         LIST = []
@@ -73,3 +129,6 @@ async def on_message(message):
         return None
     if message.content.startswith("!join"):
         await join(message)
+    if message.content.startswith("!disjoin"):
+        await disjoin(message)
+client.run("Nzk3MjgzOTUwODk2MDg3MTAx.X_kOig.CxW5s99YbgOo6RWS6qE7XGj0yIE")
