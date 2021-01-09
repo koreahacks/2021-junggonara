@@ -3,17 +3,20 @@ import asyncio
 from discord.ext import commands
 from random import randrange
 
+client = commands.Bot(command_prefix="/")
+
 @client.event
 async def on_ready():
     global GAME
     GAME = "게임 종료"
-
+    print("is ready")
 @client.command()
 async def 왕게임(ctx):
     global GAME
     global LIST
     global LIST_COUNT
-
+    maxMem=0
+    max=0
     if GAME == "게임 종료":
         GAME = "게임 시작"
         LIST = []
@@ -26,23 +29,25 @@ async def 왕게임(ctx):
         await emoji.add_reaction('🔌')
 
         try:
-            await client.wait_for('대기시간', timeout=10.0)
+            await client.wait_for('대기시간', timeout=30.0)
         except asyncio.TimeoutError :
-            if int(LIST_COUNT) <= int(2):
+            if int(LIST_COUNT) <= int(0):
                 await emoji.delete()
                 await ctx.send("3명 이하는 게임을 시작할 수 없어요!")
                 GAME = "게임 종료"
             else:
-                embed2 = discord.Embed(title="왕게임 분배 목록")
-                embed3= discord.Embed(title="왕게임 점수분배목록")
-                i = 1
+                embed2 = discord.Embed(title="왕게임 점수 분배 목록")
+                embed3= discord.Embed(title="왕은 ")
+                i = 0
                 for MEMBER in LIST:
                     i += 1
                     RANDOM = randrange(0, 100)
-                    embed3.add_field(name=f"해당 대상자는 {RANDOM}점을 분배 받았습니다", value=f"{i}번 ???")
                     embed2.add_field(name=f"해당 대상자는 {RANDOM}점을 분배 받았습니다", value=f"{i}번 <@{MEMBER}>", inline=False)
+                    if max < RANDOM:
+                        maxMem=MEMBER
+                embed3.add_field(name= "왕은 다른 번호들에게 명령을 내리세요", value=f"왕은 <@{maxMem}> 입니다.")
+                embed3.set_footer(text="60초 뒤에 각각의 점수들이 공개됩니다.")
 
-                embed3.set_footer(text="30초 후에 번호를 공개합니다")
                 embed2.set_footer(text="가장 많은 점수를 분배 받은 사람이 왕입니다!")
                 await emoji.delete()
                 await ctx.send(embed=embed3)

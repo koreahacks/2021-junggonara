@@ -1,1 +1,1 @@
-import random_choice
+import KingGame
