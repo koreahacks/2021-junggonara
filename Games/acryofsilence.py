@@ -1,15 +1,10 @@
 import asyncio
-
 import discord
 from discord.ext import commands
-
 import random
-
 from utils import GameManager
 from utils import VoiceController
-
 gm = GameManager.GameManager.instance()
-
 
 async def acryofsilence(message: discord.Message, bot: commands.Bot, words: str, count = 30):
     users = gm.users.copy()

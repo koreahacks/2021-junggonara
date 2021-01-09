@@ -8,8 +8,7 @@ from utils import VoiceController
 
 async def musicPlay(message, bot):
     musicDir = json.load(open("music.json", encoding="utf-8"))
-    #numSt=str(randrange(1, 1))
-    numSt=str(1)
+    numSt=str(randrange(1, 22))
     url=musicDir["mu"+numSt]["url"]
     singer=musicDir["mu"+numSt]["singer"]
     title=musicDir["mu"+numSt]["title"]
@@ -19,7 +18,7 @@ async def musicPlay(message, bot):
 
     voice_client = await VoiceController.connect_bot_voice_channel(message)
     start_time = time.time()
-    voice_client.play(discord.FFmpegPCMAudio(executable="C:/ffmpeg-4.3.1-2021-01-01-full_build-shared/bin/ffmpeg.exe", source="./music/IU_Good.mp3"))
+    voice_client.play(discord.FFmpegPCMAudio(executable="C:/ffmpeg-4.3.1-2021-01-01-full_build-shared/bin/ffmpeg.exe", source=url))
     while 1:
         if time.time()-start_time > 3.0 :
             break
@@ -36,23 +35,17 @@ async def musicQ(message, LIST, bot):
         return m.author == message.author and m.channel == message.channel
     msg = await bot.wait_for('message', check=pred)
 
-
-    print("abc2")
     print(msg)
     Set= await musicPlay(message, bot)
-    answer="answer"
+    answer=Set[2]
     if msg.content=="2":
         answer=Set[1]
-        await channel.send('2')
-    else:
-        answer=Set[2]
-        await channel.send('1')
     while 1:
         msg = await bot.wait_for('message', check=pred)
         if msg.content == answer:
             embed=discord.Embed(title="정답자")
-            embed.add_field(name="정답은 "+Set[1]+" 의 "+Set[2]+"입니다.",value=f"<@{msg.author}>이(가) 맞췄습니다.",inline=False)
+            embed.add_field(name="정답은 "+Set[1]+" 의 "+Set[2]+"입니다.",value=f"<@{msg.author.name}>이(가) 맞췄습니다.",inline=False)
             embed.set_footer()
             await channel.send(embed=embed)
             print(msg.author)
-            break
+            return
