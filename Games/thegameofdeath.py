@@ -5,9 +5,10 @@ import random
 
 from utils import GameManager
 
-gm = GameManager.GameManager.instance()
 
 async def thegameofdeath(message, bot):
+    gm = GameManager.GameManager.instance()
+
     starter = str(message.author.name)
     embed = discord.Embed(title="더게임오브데스 시작", description=f"모든 참가자가 참여합니다")
     embed.set_footer(text="모든 멤버들은 다른 멤버 이름을 말해주세요! 중간에는 이름 수정 가능합니다.스타터분이 맨 처음 입력해주세요:)")

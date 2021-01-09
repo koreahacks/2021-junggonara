@@ -6,10 +6,10 @@ from discord.ext import commands
 from utils import GameManager
 
 
-gm = GameManager.GameManager.instance()
 
 
 async def nunchi(message, bot):
+    gm = GameManager.GameManager.instance()
 
     rankinglist = []
 

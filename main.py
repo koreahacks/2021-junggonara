@@ -1,11 +1,10 @@
 import discord
 from discord.ext import commands
 
-import asyncio
 import json
+import random
 
 from utils import GameManager
-from utils import VoiceController
 from Games import acryofsilence, thegameofdeath, quiz, nunchi, gongsangame, bomb_game, alcohol_calculator, KingGame
 
 
@@ -14,14 +13,11 @@ bot = commands.Bot(command_prefix='!')
 gm = GameManager.GameManager.instance()
 game_info = json.load(open('game_data.json', encoding='utf-8'))
 
-print(game_info.keys())
 
 
 @bot.event
 async def on_ready():
-    activity = discord.Activity(name=".help", type=discord.ActivityType.playing)
-    await bot.change_presence(status=discord.Status.online, activity=activity)
-    print('start')
+    print(game_info.keys())
 
 
 @bot.event
@@ -72,6 +68,9 @@ async def on_message(message):
                     gm.users = message.author.voice.channel.members
                     await gongsangame.gongsan(message, bot)
 
+                elif gm.game_name == "폭탄게임":
+                    await bomb_game.bomb_game(message, bot)
+
             else:
                 await message.channel.send("해당 게임은 없습니다.")
                 gm.game_state = "WAIT_GAME"
@@ -118,6 +117,13 @@ async def on_message(message):
         elif gm.game_name == '공산당게임':
             pass
 
+        elif gm.game_name == '폭탄게임':
+            if gm.count == len(gm.users) - 1 and message.author == gm.users[0]:
+                gm.answer = message.content
+
+            elif message.author == gm.users[gm.count + 1]:
+                gm.answer = message.content
+
         else:
             await gm.set_game_over(message)
 
@@ -125,6 +131,7 @@ async def on_message(message):
         if message.content.startswith('!게임종료!'):
             await message.channel.send("게임종료 인식 성공!!")
         gm.game_state = "WAIT_GAME"
+
 
 @bot.event
 async def on_reaction_add(reaction, user):
@@ -137,5 +144,6 @@ async def on_reaction_add(reaction, user):
                     print("이미 등록된 사용자입니다")
                     return
             gm.users.append(user)
+
 
 bot.run(json.load(open("tok.json"))['tok'])

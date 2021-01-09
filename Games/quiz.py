@@ -6,13 +6,9 @@ import random
 from utils import GameManager
 
 
-gm = GameManager.GameManager.instance()
-
-
-
-
-
 async def quiz(message, bot):
+    gm = GameManager.GameManager.instance()
+
     playerlist = []
     munjangfile = open('hancome.txt', 'r', encoding='utf8')  # 문장 데이터 불러오기
     munjanglist = []
@@ -55,6 +51,8 @@ async def quiz(message, bot):
 
 
 async def nunsence(message, bot):
+    gm = GameManager.GameManager.instance()
+
     quizfile = open('nunsense.txt', 'r', encoding='utf8')  # 문장 데이터 불러오기
     quizlist = []
     while True:

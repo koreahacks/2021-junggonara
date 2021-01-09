@@ -6,9 +6,9 @@ import random
 from utils import GameManager
 
 
-gm = GameManager.GameManager.instance()
-
 async def gongsan(message, bot):
+    gm = GameManager.GameManager.instance()
+
     alcohol = ['반잔😀','한잔😋', '한잔 반😮😮', '두잔...😢😢', '세잔...?😱😱😱', '네잔🤮😵🤪🤢😇']
     LIST = gm.users
 

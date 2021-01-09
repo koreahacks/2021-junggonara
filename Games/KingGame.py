@@ -5,13 +5,14 @@ from random import randrange
 
 from utils import GameManager
 
-gm = GameManager.GameManager.instance()
 
 async def kingame(message, bot):
+    gm = GameManager.GameManager.instance()
     LIST = gm.users
     maxMem = 0
     max = 0
     channel = message.channel
+
     try:
         await bot.wait_for('대기시간', timeout=3.0)
     except asyncio.TimeoutError :
@@ -34,3 +35,5 @@ async def kingame(message, bot):
             await bot.wait_for("가나다", timeout=30)
         except asyncio.TimeoutError:
             await channel.send(embed=embed2)
+
+    gm.set_game_over(message)
