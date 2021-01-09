@@ -23,23 +23,32 @@ async def on_message(message):
     global game_name
 
     if game_state == 'WAIT_GAME':
-        if message.content == "/왕게임":
-            game_state="RECRUIT"
-            game_name=message.content[1:]
+        if message.content.startswith('!'):
+            if message.content == "!왕게임":
+                game_state="RECRUIT"
+                game_name=message.content[1:]
+                print(game_name)
+                await recruit(message, 10.0, game_name)
 
-            #await KingGame.왕게임(message,
+                #await KingGame.왕게임(message, users)
+    if game_state == 'GAMING':
+        pass
 
+    if game_state == 'GAME_OVER':
+        pass
 
-async def recruit(ctx: commands.Context, count: float, game_title: str, min = 3):
+async def recruit(message: discord.Message, count: float, game_title: str, min = 3):
     global game_state
     global users
 
     users = []
-    users.append(ctx.author.id)
+    users.append(message.author)
 
-    embed = discord.Embed(title="참가자 모집 시작", description=f"이모지를 눌러주세요!\n30초 후에 " + game_title + "가 시작합니다!")
+    channel=message.channel
+
+    embed = discord.Embed(title="참가자 모집 시작", description=f"이모지를 눌러주세요!\n" + str(count) + "초 후에 " + game_title + "가 시작합니다!")
     embed.set_footer(text="명령어를 호출한 사용자는 이미 등록되었습니다")
-    emoji = await ctx.send(embed=embed)
+    emoji = await channel.send(embed=embed)
     await emoji.add_reaction('🔌')
 
     try:
@@ -47,10 +56,10 @@ async def recruit(ctx: commands.Context, count: float, game_title: str, min = 3)
     except asyncio.TimeoutError:
         if len(users) <= min:
             await emoji.delete()
-            await ctx.send("3명 이하는 게임을 시작할 수 없어요!")
+            await channel.send(str(min)+"명 이하는 게임을 시작할 수 없어요!")
             game_state = "game_over"
         else:
-            await ctx.send("게임을 시작합니다")
+            await channel.send("게임을 시작합니다")
 
 
 @bot.event
