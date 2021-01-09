@@ -24,24 +24,35 @@ async def on_message(message):
 
     if game_state == 'WAIT_GAME':
         if message.content.startswith('!'):
+            game_state = "RECRUIT"
+            game_name = message.content[1:]
+            print(game_name)
             if message.content == "!왕게임":
-                game_state="RECRUIT"
-                game_name=message.content[1:]
-                print(game_name)
                 await recruit(message, 10.0, game_name)
-
+                game_state="GAMEING"
+                await message.channel.send("참가자: " + str(len(users)))
                 #await KingGame.왕게임(message, users)
-    if game_state == 'GAMING':
+
+            elif message.content.startswith("!한컴타자연습"):
+                await recruit(message, 10.0, game_name)
+                #await 한컴타자연습
+
+            elif message.content.startswith("!더게임오브데스"):
+                await recruit(message, 10.0, game_name)
+                # await 더게임오브데스
+
+    elif game_state == 'GAMING':
         pass
 
-    if game_state == 'GAME_OVER':
+    elif game_state == 'GAME_OVER':
         pass
 
-async def recruit(message: discord.Message, count: float, game_title: str, min = 3):
+
+async def recruit(message: discord.Message, count: float, game_title: str, min = 0):
     global game_state
     global users
 
-    users = []
+    users=[]
     users.append(message.author)
 
     channel=message.channel
@@ -57,23 +68,25 @@ async def recruit(message: discord.Message, count: float, game_title: str, min =
         if len(users) <= min:
             await emoji.delete()
             await channel.send(str(min)+"명 이하는 게임을 시작할 수 없어요!")
-            game_state = "game_over"
+            game_state = "GAME_OVER"
         else:
             await channel.send("게임을 시작합니다")
 
 
 @bot.event
 async def on_reaction_add(reaction, user):
-    global LIST_COUNT
+    global users
+
+    print("hello")
+
     if user.bot:
         return
-    if reaction.emoji == ':electric_plug:':
-        if game_state == "RECRUIT_GAME":
+    if reaction.emoji == '🔌':
+        if game_state == "RECRUIT":
             for MEMBER in users:
                 if MEMBER == user.id:
                     print("이미 등록된 사용자입니다")
                     return
-            LIST_COUNT = LIST_COUNT + 1
             users.append(user)
 
 bot.run(json.load(open("tok.json"))['tok'])
