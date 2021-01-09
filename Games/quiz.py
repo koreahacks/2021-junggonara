@@ -47,7 +47,7 @@ async def quiz(message, bot):
 
     await message.channel.send(embed=embed3)
 
-    gm.set_game_over(message)
+    await gm.set_game_over(message)
 
 
 async def nunsence(message, bot):
@@ -82,4 +82,4 @@ async def nunsence(message, bot):
                 await message.channel.send("{0} 정답!".format(str(message.author.name)))
                 break
 
-    gm.set_game_over(message)
+    await gm.set_game_over(message)

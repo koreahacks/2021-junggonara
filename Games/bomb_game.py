@@ -49,7 +49,7 @@ async def bomb_game(message, bot):
     except asyncio.TimeoutError:
         embed4 = discord.Embed(title="끝!!", description=f"{LIST[count]}당첨!!")
         await message.channel.send(embed=embed4)
-        gm.set_game_over(message)
+        await gm.set_game_over(message)
 
 
 

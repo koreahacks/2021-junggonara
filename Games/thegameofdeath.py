@@ -14,14 +14,19 @@ async def thegameofdeath(message, bot):
     embed.set_footer(text="모든 멤버들은 다른 멤버 이름을 말해주세요! 중간에는 이름 수정 가능합니다.스타터분이 맨 처음 입력해주세요:)")
     await message.channel.send(embed=embed)
 
+    LIST = [member.name for member in gm.users]
+    print(LIST)
+    gm.users = []
     gm.users.append([])
     gm.users.append({})
 
-    gm.users[0].append(message.author.voice.channel.members)
+    gm.users[0]=LIST
+
+    print(gm.users)
 
     while True:
         try:
-            bot.wait_for(timeout=0.5)
+            await bot.wait_for("텀", timeout=0.1)
         except asyncio.TimeoutError:
             if len(gm.users[0]) == len(gm.users[1]):
                 break
@@ -33,7 +38,7 @@ async def thegameofdeath(message, bot):
 
     while True:
         try:
-            bot.wait_for(timeout=0.5)
+            await bot.wait_for('텀', timeout=0.5)
         except asyncio.TimeoutError:
             if len(gm.users) == 3:
                 break
@@ -49,5 +54,5 @@ async def thegameofdeath(message, bot):
             i = i + 1
     await message.channel.send(f"걸린 사람은 {jimok}입니다! 마시세요")
 
-    gm.set_game_over(message)
+    await gm.set_game_over(message)
 

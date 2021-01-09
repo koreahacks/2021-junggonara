@@ -14,7 +14,6 @@ gm = GameManager.GameManager.instance()
 game_info = json.load(open('game_data.json', encoding='utf-8'))
 
 
-
 @bot.event
 async def on_ready():
     print(game_info.keys())
@@ -23,6 +22,10 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     words = message.content.split(' ')
+
+    if message.content == '!help':
+        await message.channel.send([key for key in game_info.keys()])
+        return
 
     if gm.game_state == 'WAIT_GAME':
         if words[0].startswith('!'):
@@ -65,7 +68,6 @@ async def on_message(message):
                     await KingGame.kingame(message, bot)
 
                 elif gm.game_name == "공산당게임":
-                    gm.users = message.author.voice.channel.members
                     await gongsangame.gongsan(message, bot)
 
                 elif gm.game_name == "폭탄게임":
@@ -84,12 +86,15 @@ async def on_message(message):
 
         elif gm.game_name == '더게임오브데스':
             if not message.author.bot:
+                print(len(gm.users))
                 if len(gm.users) == 3:
                     return
                 if message.content in gm.users[0]:
+                    print('message.content in gm.users[0]')
                     gm.users[1][message.author.name] = message.content
 
                 if len(gm.users[0]) == len(gm.users[1]):
+                    print('len(gm.users[0]) == len(gm.users[1])')
                     try:
                         gm.users.append(int(message.content))
                     except ValueError:
@@ -121,7 +126,7 @@ async def on_message(message):
             if gm.count == len(gm.users) - 1 and message.author == gm.users[0]:
                 gm.answer = message.content
 
-            elif message.author == gm.users[gm.count + 1]:
+            elif message.author == gm.users[gm.count]:
                 gm.answer = message.content
 
         else:
@@ -129,7 +134,7 @@ async def on_message(message):
 
     elif gm.game_state == 'GAME_OVER':
         if message.content.startswith('!게임종료!'):
-            await message.channel.send("게임종료 인식 성공!!")
+            await message.channel.send("게임이 정상적으로 종료되었습니다.")
         gm.game_state = "WAIT_GAME"
 
 
@@ -147,3 +152,5 @@ async def on_reaction_add(reaction, user):
 
 
 bot.run(json.load(open("tok.json"))['tok'])
+
+#

@@ -2,12 +2,12 @@
   "폭탄게임": {
     "recruit": true,
     "max_member": -1,
-    "min_member": -1
+    "min_member": 2
   },
   "눈치게임": {
-    "recruit": false,
+    "recruit": true,
     "max_member": -1,
-    "min_member": -1
+    "min_member": 2
   },
   "왕게임": {
     "recruit": true,
@@ -15,7 +15,7 @@
     "min_member": 4
   },
   "더게임오브데스": {
-    "recruit": false,
+    "recruit": true,
     "max_member": -1,
     "min_member": -1
   },
@@ -24,11 +24,6 @@
     "max_member": -1,
     "min_member": 3,
     "words": "안경 보리 새싹 옥수수 환타 배터리 민트 초코 오스트랄로피테쿠스 아이맥 화장품 마스크 휴대폰 레몬 노트북 케이블 헤드폰 체스 책받침 서랍 크로아티아 체코 대한민국 프린터"
-  },
-  "귓속말게임": {
-    "recruit": true,
-    "max_member": -1,
-    "min_member": -1
   },
   "음악퀴즈": {
     "recruit": false,
@@ -46,7 +41,7 @@
     "min_member": -1
   },
   "공산당게임": {
-    "recruit": false,
+    "recruit": true,
     "max_member": -1,
     "min_member": -1
   }
