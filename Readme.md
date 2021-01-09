@@ -1,1 +1,2 @@
-King Game.py는 왕게임 파일입니다.
+pip install 필요
+C:\Users\user\AppData\Local\Programs\Python\Python38\python.exe -m pip install -U discord.py[voice]

@@ -2,13 +2,21 @@ import discord
 import asyncio
 from discord.ext import commands
 from random import randrange
-client = discord.Client()
+
+client = commands.Bot(command_prefix='!')
 
 @client.event
 async def on_ready():
     global GAME
     GAME = "게임 종료"
     print("is ready")
+
+async def join(message):
+    channel = message.author.voice.channel
+    #channel = message.author.voice.channel
+    await channel.connect()
+
+    #await channel.connect()
 
 @client.event
 async def on_reaction_add(reaction, user):
@@ -23,6 +31,7 @@ async def on_reaction_add(reaction, user):
                     return
             LIST_COUNT = LIST_COUNT + 1
             LIST.append(user.id)
+
 async def musicQ(message,LIST):
     channel = message.channel
     if GAME == "게임 종료":
@@ -62,5 +71,7 @@ async def on_message(message):
     # 메세지를 보낸 사람이 봇일 경우 무시한다
     if message.author.bot:
         return None
-    if message.content.startswith("/음악퀴즈"):
-        z
+    if message.content.startswith("!join"):
+        await join(message)
+
+client.run("Nzk3MjgzOTUwODk2MDg3MTAx.X_kOig.iHYW6vCB4sM2dNrKs6O5J7Oz11k")
