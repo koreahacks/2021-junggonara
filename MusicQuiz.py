@@ -76,6 +76,3 @@ async def on_message(message):
     # 메세지를 보낸 사람이 봇일 경우 무시한다
     if message.author.bot:
         return None
-    if message.
-
-client.run("Nzk3MjgzOTUwODk2MDg3MTAx.X_kOig.-WdQ2wtMOaB3tlFB1RK6DRpFjWk")
