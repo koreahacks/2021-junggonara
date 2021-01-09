@@ -30,19 +30,18 @@ async def on_message(message):
         if words[0].startswith('!'):
             gm.game_state = "RECRUIT"
             game_name = words[0][1:]
+
             if game_name in game_info.keys():
                 gm.game_name = game_name
-
                 print('현재 게임은 ' + gm.game_name + '입니다')
-
                 if game_info[gm.game_name]['recruit']:
                     await gm.recruit(message, bot, 10.0, gm.game_name,
                                      game_info[gm.game_name]['min_member'],
                                      game_info[gm.game_name]['max_member'])
                     await message.channel.send("참가자: " + str(len(gm.users)))
-
                 gm.game_state = "GAMING"
                 await gm.set_game_over(message)
+
                 #await KingGame.왕게임(message, users)
 
             else:
