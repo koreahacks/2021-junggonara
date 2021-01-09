@@ -36,6 +36,7 @@ async def on_message(message):
             game_name = words[0][1:]
 
             if game_name in game_info.keys():
+                gm.initialize()
                 gm.game_name = game_name
                 print('현재 게임은 ' + gm.game_name + '입니다')
                 if game_info[gm.game_name]['recruit']:
@@ -43,10 +44,14 @@ async def on_message(message):
                                      game_info[gm.game_name]['min_member'],
                                      game_info[gm.game_name]['max_member'])
                     await message.channel.send("참가자: " + str(len(gm.users)))
-                gm.game_state = "GAMING"
+                else:
+                    gm.game_state = "GAMING"
+
+                if gm.game_state == 'WAIT_GAME':
+                    return
 
                 if gm.game_name == "고요속의외침":
-                    await acryofsilence.acryofsilence(message, bot)
+                    await acryofsilence.acryofsilence(message, bot, game_info[gm.game_name]['words'])
 
             else:
                 await message.channel.send("해당 게임은 없습니다.")
@@ -54,9 +59,12 @@ async def on_message(message):
 
     elif gm.game_state == 'GAMING':
         if gm.game_name == '고요속의외침':
-            if not message.author.bot:
+            if message.author == gm.next_user:
                 gm.next_user = message.author
                 gm.answer = message.content
+                gm.count -= 1
+        else:
+            await gm.set_game_over(message)
 
     elif gm.game_state == 'GAME_OVER':
         if message.content.startswith('!게임종료!'):
