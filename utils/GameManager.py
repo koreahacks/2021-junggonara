@@ -22,7 +22,7 @@ class GameManager:
         self.users = []
         self.next_user = None
 
-    async def recruit(self, message: discord.Message, bot: commands.Bot,  count: float, game_title: str, min=0):
+    async def recruit(self, message: discord.Message, bot: commands.Bot,  count: float, game_title: str, min = -1, max = -1):
         self.users = []
         self.users.append(message.author)
 
@@ -37,15 +37,19 @@ class GameManager:
         try:
             await bot.wait_for('대기시간', timeout=count)
         except asyncio.TimeoutError:
-            if len(self.users) <= min:
+            if len(self.users) < min:
+                await emoji.delete()
+                await channel.send(str(min-1) + "명 이하는 게임을 시작할 수 없어요!")
+                self.game_state = "GAME_OVER"
+
+            elif (len(self.users) > max) and (max != -1):
                 await emoji.delete()
                 await channel.send(str(min) + "명 이하는 게임을 시작할 수 없어요!")
                 self.game_state = "GAME_OVER"
             else:
                 await channel.send("게임을 시작합니다")
 
-    async def set_game_over(self, message: discord.Message, member: discord.Member):
+    async def set_game_over(self, message: discord.Message):
         self.game_state = "GAME_OVER"
-        self.next_user = member
         await message.channel.send("!게임종료!")
 

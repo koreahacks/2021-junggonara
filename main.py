@@ -5,11 +5,15 @@ import asyncio
 import json
 
 from utils import GameManager
+from utils import VoiceController
 
 
 bot = commands.Bot(command_prefix='!')
 
 gm = GameManager.GameManager.instance()
+game_info = json.load(open('game_data.json', encoding='utf-8'))
+
+print(game_info.keys())
 
 @bot.event
 async def on_ready():
@@ -20,28 +24,30 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    words = message.content.split(' ')
 
     if gm.game_state == 'WAIT_GAME':
-        if message.content.startswith('!'):
+        if words[0].startswith('!'):
             gm.game_state = "RECRUIT"
-            game_name = message.content[1:]
-            print(game_name)
-            if message.content == "!왕게임":
-                await gm.recruit(message, bot, 10.0, game_name)
-                game_state="GAMEING"
-                await message.channel.send("참가자: " + str(len(gm.users)))
-                await gm.set_game_over(message, gm.users[0])
+            game_name = words[0][1:]
+            if game_name in game_info.keys():
+                gm.game_name = game_name
+
+                print('현재 게임은 ' + gm.game_name + '입니다')
+
+                if game_info[gm.game_name]['recruit']:
+                    await gm.recruit(message, bot, 10.0, gm.game_name,
+                                     game_info[gm.game_name]['min_member'],
+                                     game_info[gm.game_name]['max_member'])
+                    await message.channel.send("참가자: " + str(len(gm.users)))
+
+                gm.game_state = "GAMING"
+                await gm.set_game_over(message)
                 #await KingGame.왕게임(message, users)
 
-            elif message.content.startswith("!한컴타자연습"):
-                await gm.recruit(message, bot, 10.0, game_name)
-
-                #await 한컴타자연습
-
-            elif message.content.startswith("!더게임오브데스"):
-                await gm.recruit(message, bot, 10.0, game_name)
-
-                # await 더게임오브데스
+            else:
+                await message.channel.send("해당 게임은 없습니다.")
+                gm.game_state = "WAIT_GAME"
 
     elif gm.game_state == 'GAMING':
         pass
@@ -51,8 +57,6 @@ async def on_message(message):
             await message.channel.send("게임종료 인식 성공!!")
             gm.game_state = "WAIT_GAME"
         pass
-
-
 
 
 @bot.event

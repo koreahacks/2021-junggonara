@@ -1,0 +1,47 @@
+{
+  "폭탄돌리기": {
+    "recruit": true,
+    "max_member": -1,
+    "min_member": -1
+  },
+  "눈치게임": {
+    "recruit": false,
+    "max_member": -1,
+    "min_member": -1
+  },
+  "왕게임": {
+    "recruit": true,
+    "max_member": -1,
+    "min_member": 4
+  },
+  "더게임오브데스": {
+    "recruit": false,
+    "max_member": -1,
+    "min_member": -1
+  },
+  "고요속외침": {
+    "recruit": true,
+    "max_member": -1,
+    "min_member": 3
+  },
+  "귓속말게임": {
+    "recruit": true,
+    "max_member": -1,
+    "min_member": -1
+  },
+  "음악퀴즈": {
+    "recruit": false,
+    "max_member": -1,
+    "min_member": -1
+  },
+  "넌센스퀴즈": {
+    "recruit": false,
+    "max_member": -1,
+    "min_member": -1
+  },
+  "한컴타자연습": {
+    "recruit": false,
+    "max_member": -1,
+    "min_member": -1
+  }
+}
