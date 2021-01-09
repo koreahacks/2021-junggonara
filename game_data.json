@@ -19,7 +19,7 @@
     "max_member": -1,
     "min_member": -1
   },
-  "고요속외침": {
+  "고요속의외침": {
     "recruit": true,
     "max_member": -1,
     "min_member": 3
@@ -40,6 +40,11 @@
     "min_member": -1
   },
   "한컴타자연습": {
+    "recruit": false,
+    "max_member": -1,
+    "min_member": -1
+  },
+  "공산당게임": {
     "recruit": false,
     "max_member": -1,
     "min_member": -1

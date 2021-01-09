@@ -20,6 +20,7 @@ class GameManager:
         self.game_state = "WAIT_GAME"
         self.game_name = ""
         self.users = []
+        self.answer = ""
         self.next_user = None
 
     async def recruit(self, message: discord.Message, bot: commands.Bot,  count: float, game_title: str, min = -1, max = -1):
