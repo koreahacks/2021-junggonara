@@ -5,7 +5,7 @@ import json
 import random
 
 from utils import GameManager
-from Games import acryofsilence, thegameofdeath, quiz, nunchi, gongsangame, bomb_game, alcohol_calculator, KingGame
+from Games import acryofsilence, thegameofdeath, quiz, nunchi, gongsangame, bomb_game, MusicQuiz, KingGame
 
 
 bot = commands.Bot(command_prefix='!')
