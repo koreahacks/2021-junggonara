@@ -2,7 +2,6 @@ import discord
 import asyncio
 from discord.ext import commands
 import random
-import time
 
 
 client = commands.Bot(command_prefix="/")
