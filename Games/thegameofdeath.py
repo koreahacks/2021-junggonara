@@ -3,24 +3,12 @@ import asyncio
 from discord.ext import commands
 import random
 
+from utils import GameManager
+
 client = commands.Bot(command_prefix="/")
+gm = GameManager.GameManager.instance()
 
-
-@client.event
-async def on_ready():
-    global GAME
-    global munjang
-    global count
-    global playerlist
-    playerlist = []
-    count = 0
-    GAME = "게임 종료"
-    print("already")
-
-
-#참가자 리스트가 있다는 가정 하에
-@client.event
-async def on_message(message):
+async def thegameofdeath(message):
     global count, name_list
     global CHOOSE
     global GAME
@@ -29,6 +17,7 @@ async def on_message(message):
     global final_list
     global cnt
     global i
+
     if message.content.startswith("/더게임오브데스"):
         starter = str(message.author.name)
         embed = discord.Embed(title="더게임오브데스 시작", description=f"모든 참가자가 참여합니다")
@@ -66,16 +55,3 @@ async def on_message(message):
                     i = i + 1
             await message.channel.send(f"걸린 사람은 {jimok}입니다! 마시세요")
 
-
-
-
-
-
-
-
-
-
-
-
-
-client.run("Nzk3Mzk5MzMzMzYwMTA3NTMw.X_l6AA.4JQudAb-el9L0GsMG9leAhjudN8")
