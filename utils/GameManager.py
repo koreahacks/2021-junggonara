@@ -41,7 +41,7 @@ class GameManager:
             if len(self.users) < min:
                 await emoji.delete()
                 await channel.send(str(min-1) + "명 이하는 게임을 시작할 수 없어요!")
-                self.game_state = "GAME_OVER"
+                self.game_state = "WAIT_GAME"
 
             elif (len(self.users) > max) and (max != -1):
                 await emoji.delete()

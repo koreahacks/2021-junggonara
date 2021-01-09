@@ -22,7 +22,7 @@
   "고요속의외침": {
     "recruit": true,
     "max_member": -1,
-    "min_member": 3
+    "min_member": 2
   },
   "귓속말게임": {
     "recruit": true,

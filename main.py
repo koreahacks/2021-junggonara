@@ -16,6 +16,7 @@ game_info = json.load(open('game_data.json', encoding='utf-8'))
 
 print(game_info.keys())
 
+
 @bot.event
 async def on_ready():
     activity = discord.Activity(name=".help", type=discord.ActivityType.playing)
@@ -29,6 +30,8 @@ async def on_message(message):
 
     if gm.game_state == 'WAIT_GAME':
         if words[0].startswith('!'):
+            if message.author.bot:
+                return
             gm.game_state = "RECRUIT"
             game_name = words[0][1:]
 
@@ -45,24 +48,20 @@ async def on_message(message):
                 if gm.game_name == "고요속의외침":
                     await acryofsilence.acryofsilence(message, bot)
 
-                await gm.set_game_over(message)
-
             else:
                 await message.channel.send("해당 게임은 없습니다.")
                 gm.game_state = "WAIT_GAME"
 
     elif gm.game_state == 'GAMING':
         if gm.game_name == '고요속의외침':
-            #print('input')
-            gm.next_user = message.author
-            gm.answer = message.content
+            if not message.author.bot:
+                gm.next_user = message.author
+                gm.answer = message.content
 
     elif gm.game_state == 'GAME_OVER':
         if message.content.startswith('!게임종료!'):
             await message.channel.send("게임종료 인식 성공!!")
-            gm.game_state = "WAIT_GAME"
-        pass
-
+        gm.game_state = "WAIT_GAME"
 
 @bot.event
 async def on_reaction_add(reaction, user):
