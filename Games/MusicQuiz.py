@@ -24,6 +24,7 @@ async def musicPlay(message, bot):
         if time.time()-start_time > 3.0 :
             break
     voice_client.stop()
+    await VoiceController.disconnect_bot_voice_channel(message, bot)
     return [url,singer,title]
 
 async def musicQ(message, LIST, bot):

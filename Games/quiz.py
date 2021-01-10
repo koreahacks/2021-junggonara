@@ -30,13 +30,13 @@ async def quiz(message, bot):
 
     while len(gm.users) < 3:
         try:
-            await bot.wait_for('', timeout=0.2)
+            await bot.wait_for('텀', timeout=0.2)
         except asyncio.TimeoutError:
             if gm.answer == munjang:
                 gm.answer = ""
                 gm.users.append(gm.next_user)
-                await message.channel.send("{0} 정답!".format(str(message.author.name)))
-                playerlist.append(str(message.author.name))
+                await message.channel.send("{0} 정답!".format(gm.next_user.name))
+                playerlist.append(str(gm.next_user.name))
 
     print(playerlist)
     count1 = 0
@@ -79,7 +79,7 @@ async def nunsence(message, bot):
             await bot.wait_for('', timeout=0.2)
         except asyncio.TimeoutError:
             if gm.answer == quiz[1]:
-                await message.channel.send("{0} 정답!".format(str(message.author.name)))
+                await message.channel.send("{0} 정답!".format(str(gm.next_user.name)))
                 break
 
     await gm.set_game_over(message)

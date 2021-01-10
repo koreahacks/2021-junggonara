@@ -14,6 +14,8 @@ async def connect_bot_voice_channel(message: discord.Message):
     channel = message.author.voice.channel
     return await channel.connect()
 
-async def disconnect_bot_voice_channel(message: discord.Message):
-    channel = message.author.voice.channel
-    return await channel.disconnect()
+
+async def disconnect_bot_voice_channel(message: discord.Message, bot):
+    for x in bot.voice_clients:
+        if x.channel == message.channel:
+            return await x.disconnect()
