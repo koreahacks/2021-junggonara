@@ -24,6 +24,8 @@ class GameManager:
         self.next_user = None
 
     def initialize(self):
+        self.game_name =""
+        self.game_state="WAIT_GAME"
         self.users = []
         self.answer = ""
         self.count = 0

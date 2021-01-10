@@ -13,7 +13,7 @@ bot = commands.Bot(command_prefix='!')
 gm = GameManager.GameManager.instance()
 game_info = json.load(open('game_data.json', encoding='utf-8'))
 
-print(game_info.keys())
+#print(game_info.keys())
 
 
 @bot.event
@@ -29,6 +29,11 @@ async def on_message(message):
         await message.channel.send([key for key in game_info.keys()])
         return
 
+    if message.content == '!reset':
+        print('reset')
+        gm.initialize()
+        return
+
     if gm.game_state == 'WAIT_GAME':
         if words[0].startswith('!'):
             if message.author.bot:
@@ -37,7 +42,6 @@ async def on_message(message):
             game_name = words[0][1:]
 
             if game_name in game_info.keys():
-                gm.initialize()
                 gm.game_name = game_name
                 print('현재 게임은 ' + gm.game_name + '입니다')
                 if game_info[gm.game_name]['recruit']:
@@ -140,7 +144,8 @@ async def on_message(message):
     elif gm.game_state == 'GAME_OVER':
         if message.content.startswith('!게임종료!'):
             await message.channel.send("게임이 정상적으로 종료되었습니다.")
-        gm.game_state = "WAIT_GAME"
+
+        gm.initialize()
 
 
 @bot.event

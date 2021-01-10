@@ -5,6 +5,7 @@ import re
 import json
 from random import randrange
 from utils import VoiceController
+from utils import GameManager
 
 async def musicPlay(message, bot):
     musicDir = json.load(open("music.json", encoding="utf-8"))
@@ -32,20 +33,22 @@ async def musicQ(message, LIST, bot):
     await channel.send(embed=embedSelect)
     channel = message.channel
     def pred(m):
-        return m.author == message.author and m.channel == message.channel
+        return m.channel == message.channel
     msg = await bot.wait_for('message', check=pred)
 
     print(msg)
-    Set= await musicPlay(message, bot)
+    Set = await musicPlay(message, bot)
     answer=Set[2]
     if msg.content=="2":
         answer=Set[1]
     while 1:
         msg = await bot.wait_for('message', check=pred)
         if msg.content == answer:
+            print(answer)
             embed=discord.Embed(title="정답자")
             embed.add_field(name="정답은 "+Set[1]+" 의 "+Set[2]+"입니다.",value=f"<@{msg.author.name}>이(가) 맞췄습니다.",inline=False)
             embed.set_footer()
             await channel.send(embed=embed)
             print(msg.author)
+            await GameManager.GameManager.instance().set_game_over(message)
             return
